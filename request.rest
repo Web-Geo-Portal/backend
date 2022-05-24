@@ -1,0 +1,13 @@
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+    "name":"heliware",
+    "email": "heliware@gmail.com",
+    "password":"heliware"
+}
+
+##
+
+# GET http://localhost:5000/api/users
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk4NDMzNGItNmYwMC00YTRmLWFlY2MtZTQzMmIwZThmNzZhIiwidXNlcl9uYW1lIjoidGVzdCIsInVzZXJfZW1haWwiOiJ0ZXN0cXFAZ2FtaWwuY29tIiwiaWF0IjoxNjUzMDQwOTY3LCJleHAiOjE2NTMwNDA5ODd9.J9PybwqApDuPfY_bMXs_V5ges7PPXR2KfWkf4UAsoKY
