@@ -8,37 +8,49 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
   try {
-
-    // console.log(req.cookies, req.get('origin'));
+;
     const { email, password } = req.body;
-    var count = 0;
+    let attempts = Number(req.body.attempts);
+    const now  = new Date()
+    // let emptyDate = null;
+    //     await pool.query('UPDATE users set blocked_time = $2 WHERE user_email = $1', [email,emptyDate ]);
+    //     return;
+
     const users = await pool.query('SELECT * FROM users WHERE user_email = $1', [email]);
+    // check if user is blocked
+   
+    
+
     let userLoggedIn = await pool.query('SELECT * FROM users WHERE user_email = $1 AND is_loggedIn = true', [email]);
-    console.log(users.rows[0].attempts)
+    
     if (users.rows.length === 0) 
     {
       return res.send({status: 0,  error: "Email is incorrect"});
     }
+
+    if(users.rows[0].blocked_time){
+      let temp = users.rows[0].blocked_time;
+      let time_left = new Date(temp).getTime() - (now.getTime());
+      if(time_left > 0 ){
+        return res.send({
+          status: 0,  error: "User blocked"
+        });
+      }else{
+        let emptyDate = null;
+        await pool.query('UPDATE users set blocked_time = $2 WHERE user_email = $1', [email,emptyDate ]);
+      }
+    }
     //PASSWORD CHECK
     let validPassword = await bcrypt.compare(password, users.rows[0].user_password);
     if (!validPassword){
-      // if(users.rows[0].attempts == 0){
-      //   const now = new Date()
-      //   const expdate =  new Date(now.getTime() + 300*1000);
-      //   var expiresIn = expdate.getTime() - now.getTime()
-        
-      // } 
-      // let count = users.rows[0].attempts + 1;
-      // await pool.query('UPDATE users set attempts = $2 WHERE user_email = $1', [email,count]);
-      
-      // console.log(expiresIn);
-      
-      // if(expiresIn > 0 ){
-      //   count ++;
-      // }
-      // console.log(count)
+      // block user after 3 attempts
+      if(attempts+1 > 3){
+        let blockedDate = new Date(now.getTime() + 86400000)
+        await pool.query('UPDATE users set blocked_time = $2 WHERE user_email = $1', [email,blockedDate ]);
+        return res.send({status: 0,  error: "User blocked"});
+      }
       return res.send({
-        status: 0,  error: "Password Incorrect"
+        status: 2,  error: "Password Incorrect"
     });
     } 
     if (userLoggedIn.rows.length > 0) {
