@@ -19,8 +19,8 @@ const corsOptions = {credentials:true, origin: process.env.URL || '*'};
 app.use(cors(corsOptions));
 app.use(json());
 app.use(cookieParser());
-
-app.use('/', express.static(join(__dirname, 'public')))
+// console.log(express.static(join(__dirname, 'public')))
+app.use('/', express.static(join(__dirname, '../uploads')))
 app.use('/api/auth',authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/data', dataRouter);

@@ -1,11 +1,11 @@
-POST http://localhost:5000/api/users/change-status
-Content-Type: application/json
+# POST http://localhost:5000/api/users/change-status
+# Content-Type: application/json
 
-{
-   "user_id":"be52ba85-6562-4a73-94a6-b6d56a91035b"
-}
+# {
+#    "user_id":"be52ba85-6562-4a73-94a6-b6d56a91035b"
+# }
 
 ##
 
-# GET http://localhost:5000/api/users/get-alluser
+GET http://localhost:5000/api/data/image
 # # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk4NDMzNGItNmYwMC00YTRmLWFlY2MtZTQzMmIwZThmNzZhIiwidXNlcl9uYW1lIjoidGVzdCIsInVzZXJfZW1haWwiOiJ0ZXN0cXFAZ2FtaWwuY29tIiwiaWF0IjoxNjUzMDQwOTY3LCJleHAiOjE2NTMwNDA5ODd9.J9PybwqApDuPfY_bMXs_V5ges7PPXR2KfWkf4UAsoKY
