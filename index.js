@@ -8,18 +8,17 @@ import cookieParser from 'cookie-parser';
 import { dirname,join } from 'path';
 import { fileURLToPath } from 'url';
 
+
 dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const corsOptions = {credentials:true, origin: process.env.URL || '*'};
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(json());
 app.use(cookieParser());
-// console.log(express.static(join(__dirname, 'public')))
 app.use('/', express.static(join(__dirname, '../uploads')))
 app.use('/api/auth',authRouter);
 app.use('/api/users', usersRouter);

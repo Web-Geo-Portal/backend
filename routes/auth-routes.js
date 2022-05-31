@@ -12,9 +12,6 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     let attempts = Number(req.body.attempts);
     const now  = new Date()
-    // let emptyDate = null;
-    //     await pool.query('UPDATE users set blocked_time = $2 WHERE user_email = $1', [email,emptyDate ]);
-    //     return;
 
     const users = await pool.query('SELECT * FROM users WHERE user_email = $1', [email]);
     // check if user is blocked

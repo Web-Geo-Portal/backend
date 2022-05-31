@@ -7,5 +7,5 @@
 
 ##
 
-GET http://localhost:5000/api/data/image
+GET http://localhost:5000/api/data/get-images
 # # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzk4NDMzNGItNmYwMC00YTRmLWFlY2MtZTQzMmIwZThmNzZhIiwidXNlcl9uYW1lIjoidGVzdCIsInVzZXJfZW1haWwiOiJ0ZXN0cXFAZ2FtaWwuY29tIiwiaWF0IjoxNjUzMDQwOTY3LCJleHAiOjE2NTMwNDA5ODd9.J9PybwqApDuPfY_bMXs_V5ges7PPXR2KfWkf4UAsoKY
