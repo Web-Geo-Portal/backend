@@ -36,8 +36,8 @@ router.post('/add', async (req, res) => {
     let temp_password = req.body.password;
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await pool.query(
-      'INSERT INTO users (first_name,last_name,user_email,user_role,user_password,user_name,aoi,geom,user_registered) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *'
-      , [req.body.first_name, req.body.last_name, req.body.email,req.body.user_role, hashedPassword,'',req.body.aoi,req.body.geom,false]);
+      'INSERT INTO users (user_name,user_email,user_role,user_password, aoi , geom , orignating_unit , dob ,designation , mobile_no , user_registered) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *'
+      , [req.body.first_name, req.body.email,req.body.user_role, hashedPassword,req.body.aoi,req.body.geom,req.body.orignating_unit,req.body.dob,req.body.designation,req.body.mobile_no,false]);
 
       res.send({
         status: 1,message: "User added successfully", newUser , temp_password

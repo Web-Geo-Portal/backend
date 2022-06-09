@@ -62,3 +62,10 @@ CREATE TABLE users(
 );
 
 
+
+CREATE TABLE home_settings(
+  id serial PRIMARY KEY,
+  background_image TEXT NOT NULL,
+  image_type TEXT NOT NULL,
+  updated_at timestamp NOT NULL
+);
