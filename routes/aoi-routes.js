@@ -33,9 +33,10 @@ var uploadlogo = pkg({ storage: storagelogo })
 
 
 
-router.get('/get-aoi',async(req,res) =>{
+router.post('/get-aoi',async(req,res) =>{
     try{
-      const data = await pool.query('SELECT * from final_cams1;');
+      let userRole = req.body.role;
+      const data = await pool.query('SELECT * from aoi_final_cams WHERE role = $1',[userRole]);
       res.send({status: 1,data: data.rows});
     }catch(error){
       res.status(500).json({error: error.message});

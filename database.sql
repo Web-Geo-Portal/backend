@@ -26,7 +26,7 @@ ADD COLUMN last_name TEXT NULL;
 ALTER TABLE users
 ADD COLUMN aoi INTEGER NULL;
 ALTER TABLE users
-ADD COLUMN user_role INTEGER NULL;
+ADD COLUMN user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4();
 
 SELECT * FROM users;
 
@@ -61,6 +61,8 @@ CREATE TABLE users(
   password TEXT NOT NULL
 );
 
+ALTER TABLE users
+ADD COLUMN orignating_unit TEXT NOT NULL;
 
 
 CREATE TABLE home_settings(

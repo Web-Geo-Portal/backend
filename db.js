@@ -6,7 +6,7 @@ let localPoolConfig = {
   password: 'root',
   host: 'localhost',
   port: '5432',
-  database: 'test'
+  database: 'DGRE'
 };
 
 const poolConfig = process.env.DATABASE_URL ? {
