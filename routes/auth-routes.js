@@ -81,7 +81,7 @@ router.post('/login', async (req, res) => {
     const userName = await pool.query('SELECT * FROM user_credential WHERE user_email = $1', [email]);
     // check if user is blocked
    
-    console.log(users)
+    // console.log(users)
 
     let userLoggedIn = await pool.query('SELECT * FROM user_login WHERE user_email = $1 AND is_loggedIn = true', [email]);
     
@@ -124,9 +124,13 @@ router.post('/login', async (req, res) => {
     let tokens = jwtTokens(users.rows[0]);//Gets access and refresh tokens
     res.cookie('refresh_token', tokens.refreshToken, {...(process.env.COOKIE_DOMAIN && {domain: process.env.COOKIE_DOMAIN}) , httpOnly: true,sameSite: 'none', secure: true});
     // res.json(tokens);
+    
+    let loggedLog = await pool.query('INSERT INTO a_userlog_history (user_email,login_time) VALUES ($1,$2) RETURNING *',[email,new Date()]);
+    let loggedInId = loggedLog.rows[0].id
+
     let loggedIn = await pool.query('UPDATE user_login set is_loggedIn = true WHERE user_email = $1', [email]);
     res.send({
-      status: 1, token: tokens,expiresIn:3600, message: "Login successfull",users, userName
+      status: 1, token: tokens,expiresIn:3600, message: "Login successfull", users , userName , loggedInId
     });
   } catch (error) {
     res.status(401).json({error: error.message});
@@ -153,6 +157,8 @@ router.get('/refresh_token', (req, res) => {
 router.post('/refresh_token', async(req, res) => {
   try {
     let email = req.body.email;
+    let id = req.body.id;
+    let logoutTimeUpdate = await pool.query('UPDATE a_userlog_history set logout_time = $2 WHERE id = $1', [id,new Date()]);
     const loggedOut = await pool.query('UPDATE user_login set is_loggedIn = false WHERE user_email = $1', [email]);
     res.clearCookie('refresh_token');
     return res.status(200).json({status:1,message:'Refresh token deleted.'});

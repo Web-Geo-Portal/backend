@@ -25,8 +25,8 @@ ALTER TABLE users
 ADD COLUMN last_name TEXT NULL;
 ALTER TABLE users
 ADD COLUMN aoi INTEGER NULL;
-ALTER TABLE users
-ADD COLUMN user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4();
+ALTER TABLE a_userlog_history
+ADD COLUMN user_email TEXT NULL;  --ADD COLUMN id uuid PRIMARY KEY DEFAULT uuid_generate_v4();
 
 SELECT * FROM users;
 

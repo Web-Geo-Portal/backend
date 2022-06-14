@@ -62,6 +62,12 @@ router.post('/add', async (req, res) => {
         created_by = req.body.created_by
 
     let temp_password = req.body.password;
+    let userExists = await pool.query('SELECT * FROM user_credential WHERE user_email = $1',[userEmail]);
+    if(userExists.rows.length) {
+      return res.send({
+        status: 0, error : "Email already exists!" 
+      });
+    }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user_credential = await pool.query(
       'INSERT INTO user_credential (user_name,user_email,designation,mobile_no,orignating_unit,dob) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *'
@@ -72,7 +78,7 @@ router.post('/add', async (req, res) => {
       ,[userEmail,hashedPassword,userRole,areaofintrest,geometry,created_by,new Date()]);  
 
       res.send({
-        status: 1,message: "User added successfully" , temp_password
+        status: 1,message: "User added successfully" , temp_password , userEmail , userName
       });
   } catch (error) {
     res.status(500).json({error: error.message});
